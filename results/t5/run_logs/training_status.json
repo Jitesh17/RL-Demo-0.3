@@ -1,0 +1,23 @@
+{
+    "Fork1": {
+        "checkpoints": [
+            {
+                "steps": 49176,
+                "file_path": "results/t5/Fork1/Fork1-49176.onnx",
+                "reward": null,
+                "creation_time": 1618820095.8067236
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 49176,
+            "file_path": "results/t5/Fork1.onnx",
+            "reward": null,
+            "creation_time": 1618820095.8067236
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.2.0",
+        "mlagents_version": "0.25.1",
+        "torch_version": "1.8.1+cu102"
+    }
+}

@@ -1,0 +1,35 @@
+{
+    "Fork1": {
+        "checkpoints": [
+            {
+                "steps": 49955,
+                "file_path": "results/tb2/Fork1/Fork1-49955.onnx",
+                "reward": 2467.869743347168,
+                "creation_time": 1618905887.2994041
+            },
+            {
+                "steps": 99977,
+                "file_path": "results/tb2/Fork1/Fork1-99977.onnx",
+                "reward": 743.2920684814453,
+                "creation_time": 1618907479.3934653
+            },
+            {
+                "steps": 139988,
+                "file_path": "results/tb2/Fork1/Fork1-139988.onnx",
+                "reward": 2137.0947799682617,
+                "creation_time": 1618908274.8939843
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 139988,
+            "file_path": "results/tb2/Fork1.onnx",
+            "reward": 2137.0947799682617,
+            "creation_time": 1618908274.8939843
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.2.0",
+        "mlagents_version": "0.25.1",
+        "torch_version": "1.8.1+cu102"
+    }
+}
