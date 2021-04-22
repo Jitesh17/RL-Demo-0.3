@@ -26,6 +26,16 @@ public class ForkliftAgent : Agent
     /// </summary>
     public Transform goal;
 
+
+	public WheelCollider frontRightW, frontLeftW;
+	public WheelCollider rearRightW, rearLeftW;
+	public Transform frontRightT, frontLeftT;
+	public Transform rearRightT, rearLeftT;
+	public float maxSteerAngle = 60;
+	public float changeSteerAngle = 10;
+	public float motorForce = 50;
+
+
     Rigidbody m_BlockRb;  //cached on initialization
     Rigidbody m_AgentRb;  //cached on initialization
 
@@ -86,7 +96,7 @@ public class ForkliftAgent : Agent
             transform.position = Vector3.zero;
         }
         // transform.position = Vector3.zero;
-        transform.rotation = Quaternion.Euler(0f, 0f, 0f);;
+        transform.rotation = Quaternion.Euler(0f, 0f, 0f);
         m_AgentRb.velocity = Vector3.zero;
         m_AgentRb.angularVelocity = Vector3.zero;
 
@@ -105,33 +115,52 @@ public class ForkliftAgent : Agent
         var rotateDir = Vector3.zero;
 
         var action = act[0];
-
+        
         switch (action)
         {
             case 1:
-                dirToGo = transform.forward * 1f;
+                // dirToGo = transform.forward * 1f;
+                frontRightW.motorTorque = motorForce * 1f;
+                frontLeftW.motorTorque = motorForce * 1f;
                 break;
             case 2:
-                dirToGo = transform.forward * -1f;
+                // dirToGo = transform.forward * -1f;
+                frontRightW.motorTorque = motorForce * -1f;
+                frontLeftW.motorTorque = motorForce * -1f;
                 break;
             case 3:
-                rotateDir = transform.up * 1f;
+                // rotateDir = transform.up * 1f;
+                frontRightW.steerAngle = Mathf.Min(maxSteerAngle, frontRightW.steerAngle + 10f) * 1f;
+                frontLeftW.steerAngle = Mathf.Min(maxSteerAngle, frontRightW.steerAngle + 10f) * 1f;
                 break;
             case 4:
-                rotateDir = transform.up * -1f;
+                // rotateDir = transform.up * -1f;
+                frontRightW.steerAngle = Mathf.Max(maxSteerAngle * -1f, frontRightW.steerAngle - 10f) * 1f;
+                frontLeftW.steerAngle = Mathf.Max(maxSteerAngle * -1f, frontRightW.steerAngle - 10f) * 1f;
                 break;
             case 5:
-                dirToGo = transform.right * -0.75f;
-                break;
-            case 6:
-                dirToGo = transform.right * 0.75f;
+                // dirToGo = transform.forward * 1f;
+                frontRightW.brakeTorque = motorForce * 1f;
+                frontLeftW.brakeTorque = motorForce * 1f;
                 break;
         }
-        transform.Rotate(rotateDir, Time.fixedDeltaTime * yawSpeed);
-        m_AgentRb.AddForce(dirToGo * moveForce,
-            ForceMode.VelocityChange);
+        // transform.Rotate(rotateDir, Time.fixedDeltaTime * yawSpeed);
+        // m_AgentRb.AddForce(dirToGo * moveForce,
+        //     ForceMode.VelocityChange);
     }
 
+	// private void Steer()
+	// {
+	// 	m_steeringAngle = maxSteerAngle * m_horizontalInput;
+	// 	frontRightW.steerAngle = m_steeringAngle;
+	// 	frontLeftW.steerAngle = m_steeringAngle;
+	// }
+
+	// private void Accelerate()
+	// {
+	// 	frontRightW.motorTorque = m_verticalInput * motorForce;
+	// 	frontLeftW.motorTorque = m_verticalInput * motorForce;
+	// }
 
     /// <summary>
     /// Called every step of the engine. Here the agent takes an action.
@@ -143,6 +172,8 @@ public class ForkliftAgent : Agent
         // Move the agent using the action.
         MoveAgent(actionBuffers.DiscreteActions);
 
+		// Steer();
+		// Accelerate();
 
         Vector3 toBlock = m_BlockRb.position - transform.localPosition;
         AddReward(Vector3.Dot(toBlock.normalized, m_AgentRb.velocity.normalized));
@@ -225,6 +256,14 @@ public class ForkliftAgent : Agent
         {
             discreteActionsOut[0] = 2;
         }
+        else if (Input.GetKey(KeyCode.Space))
+        {
+            discreteActionsOut[0] = 5;
+            Debug.Log("Space key was pressed.");
+        }
+
+		// m_horizontalInput = Input.GetAxis("Horizontal");
+		// m_verticalInput = Input.GetAxis("Vertical");
     }
 
 
