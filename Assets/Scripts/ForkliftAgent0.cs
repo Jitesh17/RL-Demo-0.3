@@ -4,7 +4,7 @@ using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
 
-public class ForkliftAgent : Agent
+public class ForkliftAgent0 : Agent
 {
 
     [Tooltip("Force to apply when moving")]
@@ -31,11 +31,11 @@ public class ForkliftAgent : Agent
 	public WheelCollider rearRightW, rearLeftW;
 	public Transform frontRightT, frontLeftT;
 	public Transform rearRightT, rearLeftT;
-	public BoxCollider forkHandW;
-	public Transform forkHandT;
-	public float maxForkHandLimit = 1f;
-	public float minForkHandLimit = 0.01f;
-	public float forkHandSpeed = 0.001f;
+	// public BoxCollider forkHandW;
+	// public Transform forkHandT;
+	// public float maxForkHandLimit = 1f;
+	// public float minForkHandLimit = 0.01f;
+	// public float forkHandSpeed = 0.001f;
 	public float maxSteerAngle = 60f;
 	public float changeSteerAngle = 10f;
 	public float motorForce = 50f;
@@ -120,7 +120,7 @@ public class ForkliftAgent : Agent
         var rotateDir = Vector3.zero;
 
         var action = act[0];
-        Vector3 handPos = forkHandW.transform.position;
+        // Vector3 handPos = forkHandW.transform.position;
         
         switch (action)
         {
@@ -153,12 +153,12 @@ public class ForkliftAgent : Agent
                 frontRightW.brakeTorque = motorForce * 1f;
                 frontLeftW.brakeTorque = motorForce * 1f;
                 break;
-            case 6:
-                forkHandW.transform.position = new Vector3(handPos.x, Mathf.Min(maxForkHandLimit, handPos.y + forkHandSpeed), handPos.z);
-                break;
-            case 7:
-                forkHandW.transform.position = new Vector3(handPos.x, Mathf.Max(minForkHandLimit, handPos.y - forkHandSpeed), handPos.z);
-                break;
+            // case 6:
+            //     forkHandW.transform.position = new Vector3(handPos.x, Mathf.Min(maxForkHandLimit, handPos.y + forkHandSpeed), handPos.z);
+            //     break;
+            // case 7:
+            //     forkHandW.transform.position = new Vector3(handPos.x, Mathf.Max(minForkHandLimit, handPos.y - forkHandSpeed), handPos.z);
+            //     break;
         }
         // transform.Rotate(rotateDir, Time.fixedDeltaTime * yawSpeed);
         // m_AgentRb.AddForce(dirToGo * moveForce,
